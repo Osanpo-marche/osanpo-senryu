@@ -1,1 +1,32 @@
 
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>おさんぽ川柳</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header>
+    <h1>おさんぽ川柳</h1>
+    <p class="subtitle">直売所：おさんぽマルシェ</p>
+  </header>
+
+  <main id="app">
+    <section id="post-view">
+      <input id="nickname" placeholder="ニックネーム（空でもOK）" />
+      <textarea id="senryu" placeholder="思いついた川柳をどうぞ"></textarea>
+      <button id="postBtn">投稿する</button>
+    </section>
+
+    <section id="list-view">
+      <h2>みんなの川柳</h2>
+      <div id="senryuList"></div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

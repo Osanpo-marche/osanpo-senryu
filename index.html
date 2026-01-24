@@ -1,32 +1,80 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>おさんぽ川柳</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>シルバー川柳</title>
+
+  <link rel="stylesheet" href="./style.css" />
+  <script src="./app.js" defer></script>
 </head>
+
 <body>
+  <main class="senryu">
+    <h1 class="page-title">
 
-  <header>
-    <h1>おさんぽ川柳</h1>
-    <p class="subtitle">直売所：おさんぽマルシェ</p>
-  </header>
+      <span>Osanpo 川柳 🖌</span>
+    </h1>
 
-  <main id="app">
-    <section id="post-view">
-      <input id="nickname" placeholder="ニックネーム（空でもOK）" />
-      <textarea id="senryu" placeholder="思いついた川柳をどうぞ"></textarea>
-      <button id="postBtn">投稿する</button>
+
+    <section class="inputs" aria-label="入力">
+      <div class="row">
+        <label for="in1">上の句を<br />入力してください</label>
+        <input id="in1" type="text" placeholder="5（字余り可）" autocomplete="off" autocorrect="off" autocapitalize="off"
+          spellcheck="false" inputmode="text" />
+        <span id="cnt1" class="cnt">0</span>
+      </div>
+
+      <div class="row">
+        <label for="in2">中の句を<br />入力してください</label>
+        <input id="in2" type="text" placeholder="7（字余り可）" autocomplete="off" autocorrect="off" autocapitalize="off"
+          spellcheck="false" inputmode="text" />
+        <span id="cnt2" class="cnt">0</span>
+      </div>
+
+      <div class="row">
+        <label for="in3">下の句を<br />入力してください</label>
+        <input id="in3" type="text" placeholder="5（字余り可）" autocomplete="off" autocorrect="off" autocapitalize="off"
+          spellcheck="false" inputmode="text" />
+        <span id="cnt3" class="cnt">0</span>
+      </div>
+
+
+      <div class="nameBox">
+        <div class="nameMode" role="radiogroup" aria-label="表示名の選択">
+          <label class="r">
+            <input type="radio" name="nameMode" id="modeAnon" value="anon" checked />
+            匿名
+          </label>
+          <label class="r">
+            <input type="radio" name="nameMode" id="modeNick" value="nick" />
+            ニックネーム
+          </label>
+        </div>
+
+        <input id="nick" type="text" placeholder="ニックネーム（例：たろう）" autocomplete="off" autocorrect="off"
+          autocapitalize="off" spellcheck="false" inputmode="text" disabled />
+      </div>
+
+      <span class="cnt" aria-hidden="true"></span>
+      </div>
     </section>
 
-    <section id="list-view">
-      <h2>みんなの川柳</h2>
-      <div id="senryuList"></div>
+    <section class="card" style="--bg-url: url(&quot;YOUR_TEMPLATE_IMAGE.png&quot;)" aria-label="プレビュー">
+      <div class="tate" aria-label="縦書き川柳（右から左）">
+        <!-- HTML順は 上→中→下。row-reverse で右列から表示される -->
+        <div class="col" id="pv1" aria-label="上の句プレビュー"></div>
+        <div class="col" id="pv2" aria-label="中の句プレビュー"></div>
+        <div class="col" id="pv3" aria-label="下の句プレビュー"></div>
+      </div>
     </section>
+
+    <!-- ▼ 投稿ボタン（短冊の下へ移動） -->
+    <div class="actions" aria-label="投稿">
+      <button class="postBtn" type="button">🖌 投稿する</button>
+    </div>
   </main>
-
-  <script src="app.js"></script>
 </body>
+
 </html>

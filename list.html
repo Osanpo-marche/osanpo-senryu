@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>川柳 | みんなの投稿</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+  <main class="senryu">
+    <div class="list-head">
+      <a class="backLink" href="./index.html">← 戻る</a>
+
+      <!-- タブ -->
+      <nav class="tabs" aria-label="表示切替">
+        <a class="tabLink tabAll" href="./list.html">みんなの投稿</a>
+        <a class="tabLink tabRank" href="./list.html?action=rank">今月ランキング1~3位</a>
+        <a class="tabLink tabHall" href="./list.html?action=hall">殿堂入り</a>
+      </nav>
+
+      <div class="listHeadRight">
+        <button class="reloadBtn" type="button">再読み込み</button>
+      </div>
+    </div>
+
+    <!-- ガイドメッセージ -->
+    <p class="list-guide">👍を押してお気に入り川柳を応援しよう</p>
+
+    <section id="list" aria-live="polite"></section>
+  </main>
+
+  <script src="./list.js"></script>
+</body>
+
+</html>

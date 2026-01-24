@@ -1,48 +1,956 @@
+@import url('https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;700&family=Zen+Maru+Gothic:wght@400;500;700&display=swap');
+
+/* =========================================
+   アニメーション定義
+   ========================================= */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes paperBreathe {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.005);
+  }
+}
+
+@keyframes inkSpread {
+  0% {
+    box-shadow: 0 0 0 0 rgba(43, 37, 35, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 6px rgba(43, 37, 35, 0.03);
+  }
+}
+
+
+:root {
+  --bg-color: #fffdf9;
+  /* 明るいクリーム：陽の光 */
+  --card-color: #ffffff;
+  /* 真っ白 */
+  --text-color: #5d4037;
+  /* コーヒーブラウン */
+  --sub-text-color: #8d6e63;
+  /* ミルクココア色 */
+  --accent-color: #f39c12;
+  /* 元気なビタミンオレンジ */
+  --accent-sub: #6fac05;
+  /* オレンジに合うフレッシュな葉色 */
+  --line-color: #efebe9;
+  /* 優しいベージュの罫線 */
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
-  font-family: system-ui, sans-serif;
-  background: #fafafa;
-  color: #222;
   margin: 0;
+  background-color: #ffffff;
+  /* 完全な白 */
+  color: var(--text-color);
+  font-family: "Zen Maru Gothic", "Shippori Mincho", sans-serif;
+  /* 基本は丸ゴシックで親しみやすく */
+  min-height: 100vh;
+
+  /* 背景画像なし */
+  background-image: none;
 }
 
-header {
+.senryu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 60px 20px;
+
+  /* 全体のアニメーション適用 */
+  animation: fadeInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* 子要素を順番に表示 */
+.senryu>*:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.senryu>*:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.senryu>*:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.senryu>*:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+
+/* =========================
+   タイトル
+   ========================= */
+.page-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0 20px;
+  line-height: 1;
+
+  /* タイトルを目立たせる */
+  transform-origin: center;
+  transition: transform 0.3s ease;
+}
+
+.page-title:hover {
+  transform: scale(1.02);
+}
+
+
+/* 「Osanpo」 */
+.page-title span:first-child {
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-size: 22px;
+  letter-spacing: 0.2em;
+  margin-right: -0.2em;
+  color: var(--accent-sub);
+  /* 若草色でフレッシュに */
+  margin-bottom: 24px;
+  font-weight: 700;
+}
+
+/* 「川柳」 */
+.page-title span:last-child {
+  font-family: "Shippori Mincho", serif;
+  /* ここだけは明朝で締める */
+  font-size: 58px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  margin-right: -0.1em;
+  color: var(--text-color);
+  text-shadow:
+    3px 3px 0px rgba(243, 156, 18, 0.15),
+    /* ポップな影 */
+    0 0 0 rgba(0, 0, 0, 0);
+}
+
+/* サブタイトル */
+.page-subtitle {
   text-align: center;
-  padding: 16px;
-  background: #fff;
-  border-bottom: 1px solid #ddd;
+  margin: -10px 0 0;
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-size: 16px;
+  color: var(--sub-text-color);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  opacity: 0.9;
 }
 
-h1 {
-  margin: 0;
-  font-size: 28px;
-}
-
-.subtitle {
-  font-size: 14px;
-  color: #666;
-}
-
-main {
-  padding: 16px;
-}
-
-input, textarea {
+/* =========================
+   入力エリア
+   ========================= */
+.inputs {
   width: 100%;
-  font-size: 18px;
-  padding: 8px;
-  margin-bottom: 12px;
+  max-width: 660px;
+  display: grid;
+  gap: 24px;
 }
 
-textarea {
-  min-height: 80px;
+.row {
+  display: flex;
+  align-items: center;
+  position: relative;
 }
 
-button {
-  width: 100%;
-  font-size: 20px;
-  padding: 12px;
-  background: #4caf50;
-  color: white;
-  border: none;
+/* ラベル：マルシェのタグ風（控えめなラベル感に調整） */
+label {
+  flex-shrink: 0;
+  font-size: 15px;
+  color: var(--sub-text-color);
+  background-color: rgba(141, 110, 99, 0.1);
+  /* 薄いココア色 */
+  width: 140px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 6px;
+  /* 角丸小さめ */
+  margin-right: 20px;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 0.05em;
+
+  box-shadow: none;
+  /* 影なし */
+  border: 1px solid rgba(141, 110, 99, 0.2);
+  /* 薄い枠線 */
+  background-image: none;
+}
+
+/* 入力欄：クリーンな角丸 */
+input {
+  flex: 1;
+  padding: 0 24px;
+  height: 60px;
+
+  background-color: #fff;
+  background-image: none;
+  /* 和紙柄削除 */
+
+  border: 2px solid var(--line-color);
+  border-radius: 12px;
+
+  font-family: inherit;
+  font-size: 20px;
+  color: var(--text-color);
+  letter-spacing: 0.05em;
+
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.03);
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  /* バウンス */
+}
+
+input:focus {
+  outline: none;
+  background-color: #fff;
+  border-color: var(--accent-color);
+  box-shadow:
+    0 0 0 4px rgba(243, 156, 18, 0.15);
+  transform: translateY(-2px);
+
+  animation: none;
+  /* 墨演出は削除 */
+}
+
+/* placeholder をもっと濃く（全input共通） */
+input::placeholder {
+  color: rgba(123, 117, 113, 0.65);
+  /* ← 墨色寄り */
+  font-size: 16px;
+  font-style: normal;
+  /* italicだと薄く見えやすいので切る */
+  letter-spacing: 0.06em;
+}
+
+#nick::placeholder {
+  color: rgba(123, 117, 113, 0.75);
+}
+
+
+/* Chrome/Safari の薄さ対策（保険） */
+input::-webkit-input-placeholder {
+  color: rgba(43, 37, 35, 0.78);
+}
+
+
+
+/* 文字数カウンタ */
+.cnt {
+  position: absolute;
+  right: 0;
+  bottom: 40px;
+  font-size: 12px;
+  color: var(--sub-text-color);
+  opacity: 0.6;
+}
+
+/* row内は右に添える */
+.row .cnt {
+  position: static;
+  width: 24px;
+  margin-left: 12px;
+  text-align: center;
+}
+
+.cnt[data-state="ok"] {
+  color: var(--accent-color);
+  opacity: 1;
+  font-weight: bold;
+}
+
+/* =========================
+   投稿ボタン
+   ========================= */
+.actions {
+  width: 100%;
+  max-width: 660px;
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+  /* 短冊の下なので少し開ける */
+}
+
+.postBtn {
+  width: min(520px, 100%);
+  height: 56px;
+  border-radius: 50px;
+  /* 親しみやすいカプセル形状 */
+  border: 2px solid transparent;
+  /* 枠確保 */
+
+  /* フラットでマットなオレンジ */
+  background-color: var(--accent-sub);
+  /* 一旦サブカラー(若草)ではなくメインアクセントのオレンジを使うために下書き */
+  background: var(--accent-color);
+  color: #fff;
+
+  position: relative;
+  overflow: hidden;
+
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+
+  /* 厚みをなくして、ふんわりした影のみに（スッキリ） */
+  box-shadow: 0 4px 12px rgba(243, 156, 18, 0.4);
+
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.postBtn::after {
+  display: none;
+}
+
+/* 光沢（::before）を削除してマットに */
+.postBtn::before {
+  display: none;
+}
+
+.postBtn:hover {
+  transform: translateY(-2px);
+  /* ふわっと浮く */
+  box-shadow: 0 6px 16px rgba(243, 156, 18, 0.5);
+  opacity: 0.95;
+}
+
+.postBtn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(243, 156, 18, 0.4);
+}
+
+.postBtn:focus-visible {
+  outline: 2px solid var(--accent-sub);
+  outline-offset: 4px;
+}
+
+/* =========================
+   プレビュー短冊（共通カード）
+   ========================= */
+.card {
+  position: relative;
+  width: 340px;
+  height: 520px;
+  border: none;
+  background: transparent;
+  perspective: 1000px;
+}
+
+/* 紙の表現（リニューアル：台紙＋短冊スタイル） */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background-color: #dbe2d6;
+  /* 台紙：淡い抹茶/草色 */
+
+  /* ノイズ/粒子感のあるテクスチャ */
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.15'/%3E%3C/svg%3E"),
+    linear-gradient(to bottom right, rgba(255, 255, 255, 0.4), rgba(0, 0, 0, 0.05));
+
+  /* カード自体の影 */
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.08),
+    0 1px 4px rgba(0, 0, 0, 0.05);
+
+  border-radius: 6px;
+}
+
+/* 縦書きレイアウト（短冊部分） */
+.tate {
+  position: absolute;
+  inset: 50px 30px 80px;
+  /* 台紙の中に配置（下はフッター用に空ける） */
+  z-index: 1;
+
+  background-color: #ffffff;
+  /* 字があるところを白く */
+  border-radius: 3px;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.1),
+    inset 0 0 20px rgba(255, 253, 240, 0.3);
+  /* ほんのり和紙感 */
+
+  padding: 30px 20px 10px;
+  /* 余白（上を増やして文字を下げる） */
+
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  gap: 36px;
+}
+
+.col {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  font-size: 32px;
+  line-height: 1.5;
+  letter-spacing: 0.1em;
+  color: #1a1a1a;
+
+  text-shadow:
+    0 0 1px rgba(0, 0, 0, 0.10),
+    0 0 2px rgba(0, 0, 0, 0.05);
+
+  display: flex;
+  align-items: flex-start;
+}
+
+/* 散らし書き（index のプレビュー用） */
+#pv1 {
+  margin-top: 0;
+}
+
+#pv2 {
+  margin-top: 60px;
+}
+
+#pv3 {
+  margin-top: 120px;
+}
+
+/* =========================
+   カードフッター（list.html等で使用）
+   ※index.htmlからは削除済みだが、他ページのためにスタイル維持
+   ========================= */
+.card-footer,
+.foot {
+  position: absolute;
+  bottom: 24px;
+  width: 100%;
+  padding: 0 30px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "Zen Maru Gothic", sans-serif;
+  pointer-events: none;
+  color: #0645f1;
+  /* カウント数字の色（青） */
+}
+
+/* いいねボタン風の見た目（list参照） */
+.card-footer>*,
+.foot>*,
+.likeBtn {
+  pointer-events: auto;
+}
+
+.heart,
+.yoki-btn,
+.likeBtn {
+  /* 既存のデザインに合わせて調整 */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 14px;
+  color: #58B2DC;
+  /* スカイブルー */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  gap: 4px;
+}
+
+
+/* =========================
+   レスポンシブ（index）
+   ========================= */
+@media (max-width:600px) {
+  .senryu {
+    padding: 30px 16px;
+    gap: 40px;
+  }
+
+  .inputs {
+    gap: 16px;
+  }
+
+  label {
+    width: 115px;
+    height: 48px;
+    font-size: 12px;
+    margin-right: 12px;
+  }
+
+  input {
+    font-size: 18px;
+  }
+
+  .actions {
+    max-width: 520px;
+    margin-top: -6px;
+  }
+
+  .postBtn {
+    height: 58px;
+    font-size: 18px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 320px;
+    height: 480px;
+  }
+
+  .tate {
+    inset: 40px 20px 70px;
+    /* モバイル微調整 */
+    gap: 24px;
+  }
+
+  .col {
+    font-size: 28px;
+  }
+}
+
+/* =========================
+   list.html 用：ヘッダー周り（任意）
+   ※ list.html に .list-head / .backLink / .reloadBtn がある前提
+   ========================= */
+.list-head {
+  width: 100%;
+  max-width: 980px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin: -10px auto 0;
+  padding: 0 20px;
+}
+
+.backLink {
+  color: var(--text-color);
+  text-decoration: none;
+  background: rgba(251, 250, 245, 0.92);
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  padding: 12px 14px;
+  border-radius: 10px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.listHeadRight {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.listNote {
+  font-size: 14px;
+  color: var(--sub-text-color);
+  letter-spacing: 0.12em;
+}
+
+.reloadBtn {
+  height: 48px;
+  padding: 0 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(251, 250, 245, 0.92);
+  color: var(--text-color);
+  font-family: inherit;
+  font-size: 16px;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+/* =========================
+   list.html 用：グリッド一覧（#list）
+   ※ list.js が append してるのは id="list"
+   ========================= */
+#list {
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 10px 20px 60px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 22px;
+  align-items: start;
+}
+
+/* 一覧カードを小さく */
+.card.listCard {
+  width: 100%;
+  max-width: 260px;
+  height: 360px;
+  justify-self: center;
+}
+
+/* 日時（list.js の .meta） */
+.card.listCard .meta {
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  right: 12px;
+  z-index: 2;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: #0645f1;
+  /* スカイブルーに変更 */
+  text-align: center;
+  user-select: none;
+}
+
+/* 縦書き領域を詰める */
+.card.listCard .tate {
+  inset: 40px 18px;
+  gap: 18px;
+}
+
+.card.listCard .col {
+  font-size: 22px;
+  line-height: 1.45;
+  letter-spacing: 0.12em;
+}
+
+/* 署名のスタイル */
+.card.listCard .col.name-col {
+  font-size: 14px;
+  margin-top: auto;
+  /* 下揃え */
+  padding-bottom: 30px;
+  /* 下端からの余白 */
+  color: var(--sub-text-color);
+  max-block-size: 200px;
+  /* 名前が長すぎた時の制限（必要あれば） */
+}
+
+/* 空表示（読み込み中/未投稿/エラー） */
+.empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: rgba(43, 37, 35, 0.70);
+  letter-spacing: 0.08em;
+  padding: 30px 0;
+}
+
+/* ===== モード切替（みんな / 今月 / 殿堂） ===== */
+.modeNav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid var(--line-color);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.05);
+}
+
+.modeLink {
+  text-decoration: none;
+  color: var(--sub-text-color);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 10px 16px;
+  border-radius: 14px;
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.modeLink:hover {
+  transform: translateY(-2px);
+  background: #fff;
+  color: var(--accent-color);
+  box-shadow: 0 4px 10px rgba(243, 156, 18, 0.15);
+}
+
+.modeLink.isActive {
+  color: #fff;
+  background: var(--accent-color);
+  border-color: transparent;
+  box-shadow: 0 4px 10px rgba(243, 156, 18, 0.3);
+}
+
+/* スマホ：モードを横スクロール可能に */
+@media (max-width:600px) {
+  .modeNav {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 8px;
+  }
+
+  .modeLink {
+    white-space: nowrap;
+    padding: 9px 10px;
+    font-size: 13px;
+  }
+}
+
+
+/* list ヘッダー：スマホ */
+@media (max-width:600px) {
+  .list-head {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 0 14px;
+  }
+
+  .listHeadRight {
+    justify-content: space-between;
+  }
+
+  /* スマホは2列寄せ */
+  #list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    padding: 6px 14px 46px;
+  }
+
+  .card.listCard {
+    max-width: none;
+    height: 300px;
+  }
+
+  .card.listCard .tate {
+    inset: 34px 14px;
+    gap: 14px;
+  }
+
+  .card.listCard .col {
+    font-size: 20px;
+  }
+}
+
+/* style.css */
+.nameBox {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  /* 10pxから変更 */
+  width: 100%;
+}
+
+.nameMode {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.nameMode .r {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+#nick {
+  border-color: #cfd8dc;
+  /* 枠を少し濃く */
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+#nick:disabled {
+  opacity: 0.8;
+  /* 視認性を上げる */
+  background-color: #f5f5f5;
+}
+
+/* ===== 署名：匿名/ニックネーム UI ===== */
+.nameMode {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  /* ← 2つのボタン自体を中央寄せ */
+}
+
+/* 札（ボタン）化：マルシェ風 */
+.nameMode .r {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  min-width: 180px;
+  height: 48px;
+  padding: 0 16px;
+
+  background-color: var(--sub-text-color);
+  /* ココア色 */
+  color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+  background-image: none;
+
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-align: center;
+
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.1s ease;
+}
+
+.nameMode .r:hover {
+  transform: translateY(-2px);
+}
+
+.nameMode .r:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* ラジオ自体は非表示にして、見た目は自前の丸にする（任意だけど綺麗） */
+.nameMode .r input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* 丸アイコン */
+.nameMode .r::before {
+  content: "";
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  border: 4px solid #d7ccc8;
+  /* 薄いココア色 */
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+/* 選択時の丸（中身を塗る） */
+.nameMode .r:has(input[type="radio"]:checked) {
+  background-color: var(--accent-color);
+  /* 選択中はオレンジに */
+  box-shadow: 0 4px 0 #d35400;
+}
+
+.nameMode .r:has(input[type="radio"]:checked)::before {
+  background: #fff;
+  border-color: #fff;
+  /* 白丸 */
+  box-shadow: none;
+}
+
+/* ニックネーム入力 */
+#nick {
+  width: 100%;
+}
+
+#nick:disabled {
+  opacity: 0.55;
+}
+
+/* ニックネーム選択時：入力欄を強調 */
+#nick:not(:disabled) {
+  border-color: var(--sub-text-color);
+  border-width: 2px;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(141, 110, 99, 0.15);
+}
+
+/* ===== list: いいね ===== */
+.card.listCard .foot {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 10px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  user-select: none;
+}
+
+.likeBtn {
+  height: 34px;
+  min-width: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(251, 250, 245, 0.92);
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  font-size: 16px;
+  line-height: 1;
+}
+
+.likeBtn:hover {
+  transform: translateY(-1px);
+}
+
+.likeBtn.liked {
+  border-color: rgba(191, 67, 67, 0.55);
+  box-shadow: 0 3px 12px rgba(191, 67, 67, 0.18);
+}
+
+.likeBtn:disabled {
+  opacity: 0.7;
+  cursor: default;
+  transform: none;
+}
+
+.likeCnt {
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  color: #0645f1;
+  min-width: 22px;
+  text-align: left;
+}
+
+/* サブタイトル */
+.page-subtitle {
+  text-align: center;
+  margin: -10px 0 30px;
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-size: 16px;
+  color: var(--sub-text-color);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  opacity: 0.9;
+}
+
+/* 一覧ページのガイドメッセージ */
+.list-guide {
+  text-align: center;
+  margin: 10px 0 20px;
+  color: var(--sub-text-color);
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
 }

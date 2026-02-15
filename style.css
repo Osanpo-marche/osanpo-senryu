@@ -954,3 +954,60 @@ input::-webkit-input-placeholder {
   font-weight: 700;
   letter-spacing: 0.05em;
 }
+
+/* Stitch / Material 3 Style Overrides */
+:root {
+  --m3-surface: #fef7ff;
+  --m3-primary: #6750a4; /* Stitchの標準的な紫 */
+  --m3-outline: #79747e;
+  --elevation-1: 0 1px 3px 1px rgba(0,0,0,0.15);
+  --elevation-2: 0 2px 6px 2px rgba(0,0,0,0.15);
+}
+
+/* カードを「浮き上がる紙」にする */
+.card {
+  background: var(--m3-surface);
+  border-radius: 28px !important; /* M3標準の大きな角丸 */
+  padding: 24px !important;
+  box-shadow: var(--elevation-1);
+  transition: box-shadow 0.3s cubic-bezier(0.2, 0, 0, 1), transform 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: var(--elevation-2);
+  transform: translateY(-2px);
+}
+
+/* 入力欄をStitchっぽく（下線のアニメーション） */
+.row {
+  position: relative;
+  border: none !important;
+  border-bottom: 1px solid var(--m3-outline) !important;
+  border-radius: 4px 4px 0 0 !important;
+  background: rgba(103, 80, 164, 0.05) !important;
+  transition: background 0.3s;
+}
+
+.row::after {
+  content: "";
+  position: absolute;
+  bottom: -1px; left: 50%; width: 0; height: 2px;
+  background: var(--m3-primary);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.row:focus-within::after {
+  width: 100%;
+  left: 0;
+}
+
+/* ボタンを「Filled Button」に */
+.postBtn {
+  height: 40px !important;
+  border-radius: 20px !important;
+  background-color: var(--m3-primary) !important;
+  color: white !important;
+  font-weight: 500 !important;
+  box-shadow: var(--elevation-1);
+  letter-spacing: 0.1em;
+}

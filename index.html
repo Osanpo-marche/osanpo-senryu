@@ -16,6 +16,13 @@
 
       <span>Osanpo 川柳 🖌</span>
     </h1>
+    
+    <!-- タブ（一覧/ランキング/殿堂 への導線） -->
+    <nav class="tabs tabsTop" aria-label="表示切替">
+      <a class="tabLink tabAll" href="./list.html">みんなの投稿</a>
+      <a class="tabLink tabRank" href="./list.html?action=rank">今月ランキング1~3位</a>
+      <a class="tabLink tabHall" href="./list.html?action=hall">殿堂入り</a>
+    </nav>
 
 
     <section class="inputs" aria-label="入力">
@@ -75,6 +82,23 @@
       <button class="postBtn" type="button">🖌 投稿する</button>
     </div>
   </main>
+  <script>
+(function () {
+  const u = new URL(location.href);
+  const k = u.searchParams.get("k") || "";
+  if (!k) return;
+
+  const links = document.querySelectorAll(".tabsTop a");
+  links.forEach(a => {
+    try {
+      const to = new URL(a.getAttribute("href"), location.href);
+      to.searchParams.set("k", k); // ★kを必ず付与
+      a.setAttribute("href", to.pathname + "?" + to.searchParams.toString());
+    } catch (e) {}
+  });
+})();
+</script>
+
 </body>
 
 </html>
